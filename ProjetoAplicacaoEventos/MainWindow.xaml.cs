@@ -20,9 +20,17 @@ namespace ProjetoAplicacaoEventos
     /// </summary>
     public partial class MainWindow : Window
     {
+        Usuario usuario;
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+        public MainWindow(Usuario usuario)
+        {
+            InitializeComponent();
+            this.usuario = usuario;
+            label.Content = usuario.Nome;
         }
     }
 }

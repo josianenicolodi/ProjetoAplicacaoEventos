@@ -1,0 +1,22 @@
+﻿<Window x:Name="winLogin" x:Class="ProjetoAplicacaoEventos.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProjetoAplicacaoEventos"
+        mc:Ignorable="d"
+        Title="Login" Height="300" Width="300" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="txEmail" HorizontalAlignment="Left" Height="31" Margin="55,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="185" TextChanged="txNome_TextChanged" ToolTip="Email do usaurio cadastrado."/>
+        <PasswordBox x:Name="txSenha" HorizontalAlignment="Left" Margin="55,120,0,0" VerticalAlignment="Top" Width="185" Height="32"/>
+        <Button x:Name="btLogin" Content="Entrar" HorizontalAlignment="Left" Margin="55,168,0,0" VerticalAlignment="Top" Width="185" Height="38" Click="btLogin_Click"/>
+        <Label x:Name="label" Content="Usuário: " HorizontalAlignment="Left" Margin="55,25,0,0" VerticalAlignment="Top" Width="185"/>
+        <Label x:Name="label1" Content="Senha:" HorizontalAlignment="Left" Margin="55,94,0,0" VerticalAlignment="Top" Width="185"/>
+        <Label x:Name="LbError" Content="" HorizontalAlignment="Left" Margin="55,231,0,0" VerticalAlignment="Top" Width="185" Foreground="#FF8F011B"/>
+        <Button x:Name="btCriarconta" Content="Criar conta" HorizontalAlignment="Left" Margin="55,211,0,0" VerticalAlignment="Top" Width="185" RenderTransformOrigin="-0.252,0.462" Background="#FFFFF4F4" ToolTip="criar uma nova conta de usuario" Foreground="#FF1C368F" Click="btCriarconta_Click_1"/>
+
+    </Grid>
+</Window>
