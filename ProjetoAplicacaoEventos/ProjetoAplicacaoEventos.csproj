@@ -57,6 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="GerenciadorDeUsuarios.cs" />
     <Compile Include="Usuario.cs" />
+    <Compile Include="UsuarioConteiner.cs" />
     <Page Include="CadastroUsuario.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
