@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
+using ProjetoAplicacaoEventos.Usuarios;
 
 
 namespace ProjetoAplicacaoEventos
@@ -24,7 +25,7 @@ namespace ProjetoAplicacaoEventos
 
         bool valido = true;
         Usuario usuario;
-        GerenciadorDeUsuarios gerenciadorDeUsuario;
+        UsuarioConteiner usuarioConteiner;
 
 
         public CadastroUsuario()
@@ -32,7 +33,7 @@ namespace ProjetoAplicacaoEventos
             InitializeComponent();
 
             usuario = new Usuario();
-            gerenciadorDeUsuario = GerenciadorDeUsuarios.GetInstancia();
+            usuarioConteiner = UsuarioConteiner.Load(UsuarioConteiner.path);
 
         }
 
@@ -60,10 +61,16 @@ namespace ProjetoAplicacaoEventos
             if (valido)
             {
                 SetValueUser();
-                gerenciadorDeUsuario.AddUsuario(usuario);
-                Login login = new Login();
-                login.Show();
-                this.Close();
+
+                if (!usuarioConteiner.Existe(x => x.Email == usuario.Email))
+                {
+                    //usuarioConteiner.Add(usuario, x => x.Email == usuario.Email);
+                    usuarioConteiner.Add(usuario);
+                    usuarioConteiner.Save(UsuarioConteiner.path);
+                    Login login = new Login();
+                    login.Show();
+                    this.Close();
+                }
             }
             btCadastrar.IsEnabled = true;
         }

@@ -55,10 +55,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="GerenciadorDeUsuarios.cs" />
-    <Compile Include="Usuario.cs" />
-    <Compile Include="UsuarioConteiner.cs" />
+    <Compile Include="CadastraCategoria.xaml.cs">
+      <DependentUpon>CadastraCategoria.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modelos\Categoria.cs" />
+    <Compile Include="Modelos\CategoriaConteiner.cs" />
+    <Compile Include="Modelos\Conteiner.cs" />
+    <Compile Include="Modelos\Evento.cs" />
+    <Compile Include="Modelos\EventosConteiner.cs" />
+    <Compile Include="Modelos\Feira.cs" />
+    <Compile Include="ListaTodosUsuariosTemparario.xaml.cs">
+      <DependentUpon>ListaTodosUsuariosTemparario.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modelos\Usuario.cs" />
+    <Compile Include="Modelos\UsuarioConteiner.cs" />
+    <Compile Include="Utilitarios\Utilitarios.cs" />
+    <Page Include="CadastraCategoria.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CadastroUsuario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ListaTodosUsuariosTemparario.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -112,6 +132,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

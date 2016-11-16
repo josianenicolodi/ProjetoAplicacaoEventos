@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ProjetoAplicacaoEventos.Usuarios;
+
 
 namespace ProjetoAplicacaoEventos
 {
@@ -20,12 +22,12 @@ namespace ProjetoAplicacaoEventos
     public partial class Login : Window
     {
        
-        GerenciadorDeUsuarios gerenciador;
+        UsuarioConteiner conteinerUsuario;
 
         public Login()
         {
             InitializeComponent();
-            gerenciador = GerenciadorDeUsuarios.GetInstancia();
+            conteinerUsuario = UsuarioConteiner.Load(UsuarioConteiner.path);
         }
 
         private void txNome_TextChanged(object sender, TextChangedEventArgs e)
@@ -44,6 +46,11 @@ namespace ProjetoAplicacaoEventos
 
         private void btLogin_Click(object sender, RoutedEventArgs e)
         {
+            Logar();
+        }
+
+        private void Logar()
+        {
             string email;
             string senha;
 
@@ -53,9 +60,11 @@ namespace ProjetoAplicacaoEventos
 
             Usuario user;
 
-            if (gerenciador.ExisteUsuario(email))
+            if (conteinerUsuario.Existe(x => x.Email == email))
             {
-                user = gerenciador.GetUsuarioPerEmail(email);
+                
+                user = conteinerUsuario.Get(x => x.Email == email, new Usuario("Invalido!"));
+
                 if (senha == user.Senha)
                 {
                     MainWindow janela = new MainWindow(user);
@@ -71,7 +80,21 @@ namespace ProjetoAplicacaoEventos
             {
                 LbError.Content = "Usuario não cadastrado!";
             }
+        }
 
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            ListaTodosUsuariosTemparario j = ListaTodosUsuariosTemparario.Instancia;
+            j.Show();
+            //CadastraCategoria.Instancia.Show();
+        }
+
+        private void winLogin_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                Logar();
+            }
         }
     }
 }
