@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <IntermediateOutputPath>C:\Users\ALTAMI~1.HOM\AppData\Local\Temp\vs9640.tmp\Debug\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,6 +34,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <IntermediateOutputPath>C:\Users\ALTAMI~1.HOM\AppData\Local\Temp\vs9640.tmp\Release\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -55,6 +57,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CadastorEvento.xaml.cs">
+      <DependentUpon>CadastorEvento.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CadastraCategoria.xaml.cs">
       <DependentUpon>CadastraCategoria.xaml</DependentUpon>
     </Compile>
@@ -63,13 +68,16 @@
     <Compile Include="Modelos\Conteiner.cs" />
     <Compile Include="Modelos\Evento.cs" />
     <Compile Include="Modelos\EventosConteiner.cs" />
-    <Compile Include="Modelos\Feira.cs" />
     <Compile Include="ListaTodosUsuariosTemparario.xaml.cs">
       <DependentUpon>ListaTodosUsuariosTemparario.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modelos\Usuario.cs" />
     <Compile Include="Modelos\UsuarioConteiner.cs" />
     <Compile Include="Utilitarios\Utilitarios.cs" />
+    <Page Include="CadastorEvento.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CadastraCategoria.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

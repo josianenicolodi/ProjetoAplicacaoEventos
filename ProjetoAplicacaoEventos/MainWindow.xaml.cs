@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ProjetoAplicacaoEventos.Usuarios;
-using ProjetoAplicacaoEventos.Evento;
+using ProjetoAplicacaoEventos.Conteiner;
 
 namespace ProjetoAplicacaoEventos
 {
@@ -22,22 +22,59 @@ namespace ProjetoAplicacaoEventos
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        private static MainWindow instancia;
+
         Usuario usuario;
         CategoriaConteiner categoriaConteiner;
+        UsuarioConteiner conteinerUsuario;
+        EventosConteiner conteinerEventos;
 
-       
-        public MainWindow(Usuario usuario)
+        public static MainWindow GetInstancia()
+        {
+            if (instancia == null)
+            {
+                instancia = new MainWindow();
+            }
+            return instancia;
+        }
+
+        
+        public MainWindow()
         {
             InitializeComponent();
-            Inicializar(usuario);
-;
+
+            categoriaConteiner = CategoriaConteiner.Load(CategoriaConteiner.path);
+            conteinerUsuario = UsuarioConteiner.Load(UsuarioConteiner.path);
+            usuario = conteinerUsuario.curUsuario;
+
+            conteinerEventos = EventosConteiner.Load(EventosConteiner.path);
+
+
+            if (usuario == null)
+            {
+                instancia = null;
+                if(Owner != null)
+                {
+                    Owner.Show();
+                    Hide();
+                }
+                else
+                {
+                    Application.Current.Shutdown();
+                }
+            }
+            else
+            {
+                Inicializar(usuario);
+            }
+            
         }
 
         void Inicializar(Usuario usr)
         {
             usuario = usr;
             lbUsuarioNome.Content = "Bem Vindo, " + usuario.Nome;
-            categoriaConteiner = CategoriaConteiner.Load(CategoriaConteiner.path);
             PrencheCategoriasDrop();
         }
 
@@ -48,15 +85,35 @@ namespace ProjetoAplicacaoEventos
                 cbCategoriasFiltroAdm.Items.Add(item.Nome);
                 cbCategoriasFiltroAll.Items.Add(item.Nome);
                 cbCategoriasFiltroParti.Items.Add(item.Nome);
-            }           
+            }
             cbCategoriasFiltroAdm.SelectedItem = cbCategoriasFiltroAdm.Items[0];
             cbCategoriasFiltroAll.SelectedItem = cbCategoriasFiltroAll.Items[0];
-            cbCategoriasFiltroParti.SelectedItem = cbCategoriasFiltroParti.Items[0];            
+            cbCategoriasFiltroParti.SelectedItem = cbCategoriasFiltroParti.Items[0];
         }
 
         private void cbCategoriasFiltro_Loaded(object sender, RoutedEventArgs e)
         {
-           
+
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            instancia = null;
+            Hide();
+            Owner.Show();
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            CadastorEvento j = CadastorEvento.Instancia;
+            j.Owner = this;
+            Hide();
+            j.Show();
         }
     }
 }

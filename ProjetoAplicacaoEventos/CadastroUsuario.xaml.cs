@@ -39,12 +39,7 @@ namespace ProjetoAplicacaoEventos
 
         private void btCancelar_Click(object sender, RoutedEventArgs e)
         {
-            Login telalogin = new Login();
-
-            telalogin.Show();
             Close();
-
-
         }
 
         private void btCadastrar_Click(object sender, RoutedEventArgs e)

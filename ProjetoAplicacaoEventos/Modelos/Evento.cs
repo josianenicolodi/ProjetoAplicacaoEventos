@@ -1,17 +1,23 @@
-﻿using System;
+﻿using ProjetoAplicacaoEventos.Usuarios;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjetoAplicacaoEventos.Evento
+namespace ProjetoAplicacaoEventos.Conteiner
 {
-    public abstract class Evento
+    [System.Serializable]
+    public class Evento
     {
         private string nome;
-        private string local;
+        private string endereco;
+        private string descricao;
+
         private Categoria categoria;
         private DateTime data;
+        
+        private Usuario criador;
 
         public string Nome
         {
@@ -26,16 +32,16 @@ namespace ProjetoAplicacaoEventos.Evento
             }
         }
 
-        public string Local
+        public string Endereco
         {
             get
             {
-                return local;
+                return endereco;
             }
 
             set
             {
-                local = value;
+                endereco = value;
             }
         }
 
@@ -62,6 +68,33 @@ namespace ProjetoAplicacaoEventos.Evento
             set
             {
                 categoria = value;
+            }
+        }
+
+        public string Descricao
+        {
+            get
+            {
+                return descricao;
+            }
+
+            set
+            {
+                descricao = value;
+            }
+        }
+
+        public Usuario Criador
+        {
+            get
+            {
+                return criador;
+            }
+
+            set
+            {
+                //if (criador != null)
+                    criador = value;
             }
         }
     }

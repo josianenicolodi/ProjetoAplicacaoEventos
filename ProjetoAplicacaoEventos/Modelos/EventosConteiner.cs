@@ -5,18 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using ProjetoAplicacaoEventos.Conteiner;
 
-namespace ProjetoAplicacaoEventos.Evento
+
+namespace ProjetoAplicacaoEventos.Conteiner
 {
     [System.Serializable]
     public class EventosConteiner : ConteinerXml<EventosConteiner,Evento>
     {
         [XmlIgnore]
-        public static string path = "Categorias.xml";
+        public static string path = "Eventos.data";
         
 
-        private EventosConteiner()
+        public EventosConteiner()
         {
             colecao = new List<Evento>();
         }

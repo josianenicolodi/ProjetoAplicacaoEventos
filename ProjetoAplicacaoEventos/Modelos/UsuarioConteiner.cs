@@ -14,7 +14,7 @@ namespace ProjetoAplicacaoEventos.Usuarios
     public class UsuarioConteiner : ConteinerXml<UsuarioConteiner,Usuario>
     {
         public static string path = @"Usuarios.xml";
-
+        public Usuario curUsuario;
 
         public UsuarioConteiner()
         {

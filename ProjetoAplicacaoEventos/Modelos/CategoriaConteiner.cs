@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ProjetoAplicacaoEventos.Conteiner;
 
-namespace ProjetoAplicacaoEventos.Evento
+namespace ProjetoAplicacaoEventos.Conteiner
 {
     [System.Serializable]
     public class CategoriaConteiner : ConteinerXml<CategoriaConteiner,Categoria>

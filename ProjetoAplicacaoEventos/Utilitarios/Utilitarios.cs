@@ -3,17 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace ProjetoAplicacaoEventos.Utilitarios
 {
     public static class Utilitarios
     {
 
-        /// <summary>
-        /// Verifica se a string é vazia "". 
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
         public static bool IsEmpty(this string str)
         {
             return (str == string.Empty);
@@ -23,7 +19,5 @@ namespace ProjetoAplicacaoEventos.Utilitarios
         {
             return (str == null);
         }
-
-
     }
 }

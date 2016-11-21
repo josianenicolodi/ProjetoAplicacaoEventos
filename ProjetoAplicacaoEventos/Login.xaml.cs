@@ -21,8 +21,21 @@ namespace ProjetoAplicacaoEventos
     /// </summary>
     public partial class Login : Window
     {
-       
+        private static Login instancia;
+
         UsuarioConteiner conteinerUsuario;
+
+        public static Login Instancia
+        {
+            get
+            {
+                if (instancia == null)
+                {
+                    instancia = new Login();
+                }
+                return instancia;
+            }
+        }
 
         public Login()
         {
@@ -38,10 +51,10 @@ namespace ProjetoAplicacaoEventos
 
         private void btCriarconta_Click_1(object sender, RoutedEventArgs e)
         {
-            CadastroUsuario cadastro = new CadastroUsuario(); 
-
-            cadastro.Show();
-            this.Close();
+            CadastroUsuario cadastro = new CadastroUsuario();
+            cadastro.Owner = this;
+            cadastro.ShowDialog();
+            
         }
 
         private void btLogin_Click(object sender, RoutedEventArgs e)
@@ -62,14 +75,18 @@ namespace ProjetoAplicacaoEventos
 
             if (conteinerUsuario.Existe(x => x.Email == email))
             {
-                
+
                 user = conteinerUsuario.Get(x => x.Email == email, new Usuario("Invalido!"));
 
                 if (senha == user.Senha)
                 {
-                    MainWindow janela = new MainWindow(user);
+                    conteinerUsuario.curUsuario = user;
+
+                    MainWindow janela = MainWindow.GetInstancia();
+
+                    janela.Owner = this;
+                    Hide();
                     janela.Show();
-                    this.Close();
                 }
                 else
                 {
@@ -84,17 +101,25 @@ namespace ProjetoAplicacaoEventos
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            ListaTodosUsuariosTemparario j = ListaTodosUsuariosTemparario.Instancia;
+            //ListaTodosUsuariosTemparario j = ListaTodosUsuariosTemparario.Instancia;
+            CadastorEvento j = CadastorEvento.Instancia;
+            j.Owner = this;
+            Hide();
             j.Show();
             //CadastraCategoria.Instancia.Show();
         }
 
         private void winLogin_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Enter)
+            if (e.Key == Key.Enter)
             {
                 Logar();
             }
+        }
+
+        private void winLogin_Closed(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }
