@@ -65,6 +65,10 @@ namespace ProjetoAplicacaoEventos
                     Login login = new Login();
                     login.Show();
                     this.Close();
+                }else
+                {
+                    lbErrorEmail.Content = "Email já cadastrado!";
+                    txEmail.Text = string.Empty;
                 }
             }
             btCadastrar.IsEnabled = true;

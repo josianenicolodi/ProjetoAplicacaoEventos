@@ -8,10 +8,17 @@
         mc:Ignorable="d"
         Title="ListaTodosUsuariosTemparario" Height="300" Width="300" Activated="Window_Activated">
     <Grid>
-        <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="243" Margin="10,10,0,0" VerticalAlignment="Top" Width="267">
+        <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="100" Margin="10,10,0,0" VerticalAlignment="Top" Width="267">
             <ListBox.DataContext>
                 <Usuarios:Usuario/>
             </ListBox.DataContext>
         </ListBox>
+        <Grid HorizontalAlignment="Left" Height="75" Margin="10,145,0,0" VerticalAlignment="Top" Width="272">
+            <Label x:Name="lbNomeEv" Content="Nome Evento" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" FontSize="14" Margin="0,-5,0,0"/>
+            <Label x:Name="lbDataEv" Content="20/04/2016 - 11:30" HorizontalAlignment="Left" Margin="5,29,0,0" VerticalAlignment="Top" Width="60" Height="24" FontSize="9"/>
+            <Button x:Name="btParticiapr" Content="Participar" HorizontalAlignment="Left" Margin="215,14,0,0" VerticalAlignment="Top" Width="52" FontSize="10"/>
+            <Button x:Name="btDetalhes" Content="Detalhes" HorizontalAlignment="Left" Margin="215,39,0,0" VerticalAlignment="Top" Width="52" IsEnabled="False"/>
+            <TextBlock x:Name="tbDescri_" HorizontalAlignment="Left" Margin="90,24,0,0" TextWrapping="Wrap" Text="dasacaca sdfs wfga reg awsfg rg " VerticalAlignment="Top" Height="51" Width="115" FontSize="10"/>
+        </Grid>
     </Grid>
 </Window>

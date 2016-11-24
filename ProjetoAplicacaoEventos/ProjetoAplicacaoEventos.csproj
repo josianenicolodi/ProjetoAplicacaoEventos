@@ -24,7 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <IntermediateOutputPath>C:\Users\ALTAMI~1.HOM\AppData\Local\Temp\vs9640.tmp\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\Josiane\AppData\Local\Temp\vs796A.tmp\Debug\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,7 +34,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <IntermediateOutputPath>C:\Users\ALTAMI~1.HOM\AppData\Local\Temp\vs9640.tmp\Release\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\Josiane\AppData\Local\Temp\vs796A.tmp\Release\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -71,6 +71,7 @@
     <Compile Include="ListaTodosUsuariosTemparario.xaml.cs">
       <DependentUpon>ListaTodosUsuariosTemparario.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modelos\Participante.cs" />
     <Compile Include="Modelos\Usuario.cs" />
     <Compile Include="Modelos\UsuarioConteiner.cs" />
     <Compile Include="Utilitarios\Utilitarios.cs" />

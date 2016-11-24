@@ -101,8 +101,8 @@ namespace ProjetoAplicacaoEventos
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            //ListaTodosUsuariosTemparario j = ListaTodosUsuariosTemparario.Instancia;
-            CadastorEvento j = CadastorEvento.Instancia;
+            ListaTodosUsuariosTemparario j = ListaTodosUsuariosTemparario.Instancia;
+ 
             j.Owner = this;
             Hide();
             j.Show();

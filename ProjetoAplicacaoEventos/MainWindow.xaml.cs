@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ProjetoAplicacaoEventos.Usuarios;
 using ProjetoAplicacaoEventos.Conteiner;
+using System.Collections.ObjectModel;
 
 namespace ProjetoAplicacaoEventos
 {
@@ -30,6 +31,10 @@ namespace ProjetoAplicacaoEventos
         UsuarioConteiner conteinerUsuario;
         EventosConteiner conteinerEventos;
 
+        ObservableCollection<Evento> eventosAll;
+        ObservableCollection<Evento> eventosParticipo;
+        ObservableCollection<Evento> eventosMeus;
+
         public static MainWindow GetInstancia()
         {
             if (instancia == null)
@@ -39,7 +44,7 @@ namespace ProjetoAplicacaoEventos
             return instancia;
         }
 
-        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -54,7 +59,7 @@ namespace ProjetoAplicacaoEventos
             if (usuario == null)
             {
                 instancia = null;
-                if(Owner != null)
+                if (Owner != null)
                 {
                     Owner.Show();
                     Hide();
@@ -68,7 +73,7 @@ namespace ProjetoAplicacaoEventos
             {
                 Inicializar(usuario);
             }
-            
+
         }
 
         void Inicializar(Usuario usr)
@@ -76,6 +81,31 @@ namespace ProjetoAplicacaoEventos
             usuario = usr;
             lbUsuarioNome.Content = "Bem Vindo, " + usuario.Nome;
             PrencheCategoriasDrop();
+
+            PreencheListAllEventos();
+        }
+
+        void PreencheListAllEventos()
+        {
+            eventosAll = new ObservableCollection<Evento>(conteinerEventos.colecao);
+            listBoxEventosAll.ItemsSource = eventosAll;
+        }
+
+        void PreencheListAParticipoEventos()
+        {
+            eventosParticipo = new ObservableCollection<Evento>(conteinerEventos.GetEventos
+                (
+                x => x.Participa(usuario.Email))
+                );
+            listBoxEventosParticipo.ItemsSource = eventosParticipo.OrderBy(x => x.Data);
+          
+        }
+        void PreencheListMeusEventos()
+        {
+            Usuario usuario = conteinerUsuario.curUsuario;
+            eventosMeus = new ObservableCollection<Evento>(conteinerEventos.GetEventos(
+                x => x.Criador.Email == usuario.Email));
+            listBoxEventosMeus.ItemsSource = eventosMeus;
         }
 
         private void PrencheCategoriasDrop()
@@ -89,6 +119,8 @@ namespace ProjetoAplicacaoEventos
             cbCategoriasFiltroAdm.SelectedItem = cbCategoriasFiltroAdm.Items[0];
             cbCategoriasFiltroAll.SelectedItem = cbCategoriasFiltroAll.Items[0];
             cbCategoriasFiltroParti.SelectedItem = cbCategoriasFiltroParti.Items[0];
+
+
         }
 
         private void cbCategoriasFiltro_Loaded(object sender, RoutedEventArgs e)
@@ -110,10 +142,25 @@ namespace ProjetoAplicacaoEventos
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            CadastorEvento j = CadastorEvento.Instancia;
+            CadastroEvento j = CadastroEvento.Instancia;
             j.Owner = this;
             Hide();
             j.Show();
+        }
+
+        private void AbaAllEventos_GotFocus(object sender, RoutedEventArgs e)
+        {
+            PreencheListAllEventos();
+        }
+
+        private void AbaEventoMeus_GotFocus(object sender, RoutedEventArgs e)
+        {
+            PreencheListMeusEventos();
+        }
+
+        private void AbaEventoParticipo_GotFocus(object sender, RoutedEventArgs e)
+        {
+            PreencheListAParticipoEventos();
         }
     }
 }

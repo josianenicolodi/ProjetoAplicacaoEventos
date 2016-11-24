@@ -17,7 +17,7 @@
         <Label x:Name="label1" Content="Senha:" HorizontalAlignment="Left" Margin="55,94,0,0" VerticalAlignment="Top" Width="185"/>
         <Label x:Name="LbError" Content="" HorizontalAlignment="Left" Margin="55,231,0,0" VerticalAlignment="Top" Width="185" Foreground="#FF8F011B"/>
         <Button x:Name="btCriarconta" Content="Criar conta" HorizontalAlignment="Left" Margin="55,211,0,0" VerticalAlignment="Top" Width="185" RenderTransformOrigin="-0.252,0.462" Background="#FFFFF4F4" ToolTip="criar uma nova conta de usuario" Foreground="#FF1C368F" Click="btCriarconta_Click_1"/>
-        <Button x:Name="button" Content="TestMalucos" HorizontalAlignment="Left" Margin="202,242,0,0" VerticalAlignment="Top" Width="82" Click="button_Click" IsEnabled="False"/>
+        <Button x:Name="button" Content="TestMalucos" HorizontalAlignment="Left" Margin="202,242,0,0" VerticalAlignment="Top" Width="82" Click="button_Click"/>
 
     </Grid>
 </Window>

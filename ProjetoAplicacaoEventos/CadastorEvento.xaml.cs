@@ -17,25 +17,25 @@ using ProjetoAplicacaoEventos.Utilitarios;
 
 namespace ProjetoAplicacaoEventos
 {
-    /// <summary>
-    /// Interaction logic for CadastorEvento.xaml
-    /// </summary>
-    public partial class CadastorEvento : Window
+
+    // Interacao logica para CadastroEvento.xaml
+    // esta classe recebe por herança a classe Window 
+    public partial class CadastroEvento : Window
     {
 
-        private static CadastorEvento instancia;
+        private static CadastroEvento instancia;
 
         CategoriaConteiner categoriaConteiner;
-        UsuarioConteiner conteinerUsuario;
+        UsuarioConteiner conteinerUsuario;  
         EventosConteiner conteinerEventos;
-
-        public static CadastorEvento Instancia
+        // propriedade que armazena instância
+        public static CadastroEvento Instancia
         {
             get
             {
                 if (instancia == null)
                 {
-                    instancia = new CadastorEvento();
+                    instancia = new CadastroEvento();
                     return instancia;
                 }
                 else
@@ -45,20 +45,24 @@ namespace ProjetoAplicacaoEventos
             }
         }
 
-
-        private CadastorEvento()
+        // Construtor da classe do tipo privado
+        private CadastroEvento()
         {
+            // Inicializa a interface gráfica
             InitializeComponent();
 
+            //instancia de conteiner de usuario, categoria do conteiner e eventos
             conteinerUsuario = UsuarioConteiner.Load(UsuarioConteiner.path);
             categoriaConteiner = CategoriaConteiner.Load(CategoriaConteiner.path);
             conteinerEventos = EventosConteiner.Load(EventosConteiner.path);
 
-
+            // Adiciona itens no combobox
             foreach (var item in categoriaConteiner.colecao)
             {
                 cbCategoria.Items.Add(item.Nome);
             }
+
+            //Determina uma categoria pré selecionada
             cbCategoria.SelectedItem = cbCategoria.Items[0];
             for (int i = 0; i < 24; i++)
             {
@@ -66,11 +70,12 @@ namespace ProjetoAplicacaoEventos
                 cbHora.Items.Add(i + ":30");
             }
             cbHora.SelectedItem = cbHora.Items[24];
+            //Determina uma hora pré selecionada
         }
 
 
 
-
+        // Metodo que mostra a janela que chamou esta
         private void Window_Closed(object sender, EventArgs e)
         {
             instancia = null;
@@ -80,11 +85,13 @@ namespace ProjetoAplicacaoEventos
             }
         }
 
-        ~CadastorEvento()
+        // Destrutor da classe
+        ~CadastroEvento()
         {
             instancia = null;
         }
 
+        // Metodo que esconde a janela atual e mostra a que a chamou
         private void btCancelar_Click(object sender, RoutedEventArgs e)
         {
             Owner.Show();
@@ -114,27 +121,30 @@ namespace ProjetoAplicacaoEventos
                 new Categoria() { Nome = "Indefinida" });
 
             evento.Criador = conteinerUsuario.curUsuario;
-            DateTime d;
+            evento.AdicionaParticipante(new Participante(evento.Criador.Nome, evento.Criador.Email));
+            DateTime dia;
 
             if (dtbData.SelectedDate == null)
             {
+                // informar que a data selecionada é inválida
                 //lbErrorData.Content = "Deve selecionar uma data valida!";
             }
             else
             {
-                d = dtbData.SelectedDate.Value;
+                dia = dtbData.SelectedDate.Value;
                 string[] s = new string[2];
                 s = cbHora.SelectedItem.ToString().Split(':');
-                TimeSpan t = new TimeSpan(Convert.ToInt32(s[0]), Convert.ToInt32(s[1]), 0);
-                evento.Data = d.Add(t);                
+                TimeSpan hora = new TimeSpan(Convert.ToInt32(s[0]), Convert.ToInt32(s[1]), 0);
+                evento.Data = dia.Add(hora);                
             }
 
-
+            // Caso todas as validações estejam corretas adiciona o evento ao conteiner
             conteinerEventos.Add(evento);
+            // Salva o conteiner
             conteinerEventos.Save(EventosConteiner.path);
 
 
-
+            // Mostra a janela anterior e esconde a atual
             Owner.Show();
             Hide();
         }

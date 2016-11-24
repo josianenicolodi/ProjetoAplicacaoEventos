@@ -16,9 +16,10 @@ namespace ProjetoAplicacaoEventos.Conteiner
         [XmlArray("colecao")]
         [XmlArrayItem("Item")]   
         public List<C> colecao;
+
         
 
-        #region DAO
+        #region DAdO
         public C Get(Predicate<C> predicado, C defaut)
         {
             if (colecao.Exists(predicado))
@@ -26,6 +27,11 @@ namespace ProjetoAplicacaoEventos.Conteiner
                 return colecao.Find(predicado);
             }
             return defaut;
+        }
+
+        public List<C> GetEventos(Predicate<C> predicado)
+        {
+            return colecao.FindAll(predicado);
         }
 
         public void Add(C Novo, Predicate<C> predicado)

@@ -1,6 +1,7 @@
 ﻿using ProjetoAplicacaoEventos.Usuarios;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 namespace ProjetoAplicacaoEventos.Conteiner
 {
     [System.Serializable]
-    public class Evento
+    public class Evento 
     {
         private string nome;
         private string endereco;
@@ -16,9 +17,15 @@ namespace ProjetoAplicacaoEventos.Conteiner
 
         private Categoria categoria;
         private DateTime data;
-        
         private Usuario criador;
+        public List<Participante> participantes;
 
+
+        public Evento()
+        {
+            participantes = new List<Participante>();
+        }
+        #region Propriedades
         public string Nome
         {
             get
@@ -94,8 +101,44 @@ namespace ProjetoAplicacaoEventos.Conteiner
             set
             {
                 //if (criador != null)
-                    criador = value;
+                criador = value;
             }
         }
+
+       
+        public List<Participante> Participantes
+        {
+            get
+            {
+                return participantes;
+            }
+
+            set
+            {
+                participantes = value;
+            }
+        }
+        #endregion
+
+        public bool Participa(string email)
+        {
+            return participantes.Find(x => x.Email == email) != null;
+        }
+
+        public void AdicionaParticipante(Participante participante)
+        {
+            participantes.Add(participante);
+        }
+
+        public override string ToString()
+        {
+            StringBuilder st = new StringBuilder();
+            st.Append(nome);
+            st.Append(" em: ");
+            st.Append(data.ToShortDateString());
+
+            return st.ToString();
+        }
     }
+   
 }
