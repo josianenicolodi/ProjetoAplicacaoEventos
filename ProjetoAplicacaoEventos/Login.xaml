@@ -10,7 +10,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBox x:Name="txEmail" HorizontalAlignment="Left" Height="31" Margin="55,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="185" TextChanged="txNome_TextChanged" ToolTip="Email do usaurio cadastrado."/>
+        <TextBox x:Name="txEmail" HorizontalAlignment="Left" Height="31" Margin="55,51,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="185" TextChanged="txNome_TextChanged" ToolTip="Email do usaurio cadastrado." GotFocus="txEmail_GotFocus" LostFocus="txEmail_LostFocus"/>
         <PasswordBox x:Name="txSenha" HorizontalAlignment="Left" Margin="55,120,0,0" VerticalAlignment="Top" Width="185" Height="32"/>
         <Button x:Name="btLogin" Content="Entrar" HorizontalAlignment="Left" Margin="55,168,0,0" VerticalAlignment="Top" Width="185" Height="38" Click="btLogin_Click"/>
         <Label x:Name="label" Content="Usuário: " HorizontalAlignment="Left" Margin="55,25,0,0" VerticalAlignment="Top" Width="185"/>
@@ -18,6 +18,7 @@
         <Label x:Name="LbError" Content="" HorizontalAlignment="Left" Margin="55,231,0,0" VerticalAlignment="Top" Width="185" Foreground="#FF8F011B"/>
         <Button x:Name="btCriarconta" Content="Criar conta" HorizontalAlignment="Left" Margin="55,211,0,0" VerticalAlignment="Top" Width="185" RenderTransformOrigin="-0.252,0.462" Background="#FFFFF4F4" ToolTip="criar uma nova conta de usuario" Foreground="#FF1C368F" Click="btCriarconta_Click_1"/>
         <Button x:Name="button" Content="TestMalucos" HorizontalAlignment="Left" Margin="202,242,0,0" VerticalAlignment="Top" Width="82" Click="button_Click"/>
+        <Label x:Name="lbLOginErro" Content="" HorizontalAlignment="Left" Margin="111,25,0,0" VerticalAlignment="Top" Width="129" Foreground="#FFF70000"/>
 
     </Grid>
 </Window>

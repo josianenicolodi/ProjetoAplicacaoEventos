@@ -35,6 +35,8 @@ namespace ProjetoAplicacaoEventos
         ObservableCollection<Evento> eventosParticipo;
         ObservableCollection<Evento> eventosMeus;
 
+        public ICommand ClickMeCommand { get; set; }
+
         public static MainWindow GetInstancia()
         {
             if (instancia == null)
@@ -89,6 +91,9 @@ namespace ProjetoAplicacaoEventos
         {
             eventosAll = new ObservableCollection<Evento>(conteinerEventos.colecao);
             listBoxEventosAll.ItemsSource = eventosAll;
+
+           
+
         }
 
         void PreencheListAParticipoEventos()
@@ -161,6 +166,17 @@ namespace ProjetoAplicacaoEventos
         private void AbaEventoParticipo_GotFocus(object sender, RoutedEventArgs e)
         {
             PreencheListAParticipoEventos();
+        }
+
+        private void btParticiapr_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(sender.ToString());
+            Button bt = (Button)sender;
+            Grid grid = (Grid)bt.Parent;
+            Evento ev = (Evento)grid.DataContext;
+
+            ev.AdicionaParticipante(new Participante(usuario.Nome, usuario.Email));
+            string tes = conteinerEventos.colecao[0].Nome;
         }
     }
 }

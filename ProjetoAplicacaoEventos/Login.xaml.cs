@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ProjetoAplicacaoEventos.Usuarios;
-
+using System.Text.RegularExpressions;
 
 namespace ProjetoAplicacaoEventos
 {
@@ -120,6 +120,32 @@ namespace ProjetoAplicacaoEventos
         private void winLogin_Closed(object sender, EventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void txEmail_GotFocus(object sender, RoutedEventArgs e)
+        {
+        }
+
+        public static bool emailInvalido(string email)
+        {
+
+            Regex regExpEmail = new Regex("^[A-Za-z0-9](([_.-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([.-]?[a-zA-Z0-9]+)*)([.][A-Za-z]{2,4})$");
+            Match match = regExpEmail.Match(email);
+
+            return !(match.Success);
+        }
+
+        private void txEmail_LostFocus(object sender, RoutedEventArgs e)
+        {
+
+            if (emailInvalido(txEmail.Text))
+            {
+                lbLOginErro.Content = "Email invalido!";
+            }
+            else
+            {
+                lbLOginErro.Content = string.Empty;
+            }
         }
     }
 }
