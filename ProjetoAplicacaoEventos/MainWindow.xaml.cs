@@ -35,7 +35,7 @@ namespace ProjetoAplicacaoEventos
         ObservableCollection<Evento> eventosParticipo;
         ObservableCollection<Evento> eventosMeus;
 
-        public ICommand ClickMeCommand { get; set; }
+
 
         public static MainWindow GetInstancia()
         {
@@ -83,38 +83,70 @@ namespace ProjetoAplicacaoEventos
             usuario = usr;
             lbUsuarioNome.Content = "Bem Vindo, " + usuario.Nome;
             PrencheCategoriasDrop();
-
             PreencheListAllEventos();
         }
 
         void PreencheListAllEventos()
         {
-            eventosAll = new ObservableCollection<Evento>(conteinerEventos.colecao);
+            string name = cbCategoriasFiltroAll.SelectedItem.ToString();
+            if (name == "Todas Categorias")
+            {
+                eventosAll = new ObservableCollection<Evento>(conteinerEventos.colecao);
+            }
+            else
+            {
+                eventosAll = new ObservableCollection<Evento>(conteinerEventos.GetEventos(
+                    x => x.Categoria.Nome == name));
+
+                listBoxEventosAll.ItemsSource = eventosAll;
+            }
             listBoxEventosAll.ItemsSource = eventosAll;
-
-           
-
         }
 
         void PreencheListAParticipoEventos()
         {
-            eventosParticipo = new ObservableCollection<Evento>(conteinerEventos.GetEventos
+            string name = cbCategoriasFiltroParti.SelectedItem.ToString();
+            if (name == "Todas Categorias")
+            {
+                eventosParticipo = new ObservableCollection<Evento>(conteinerEventos.GetEventos
                 (
                 x => x.Participa(usuario.Email))
                 );
+            }
+            else
+            {
+                eventosParticipo = new ObservableCollection<Evento>(conteinerEventos.GetEventos
+               (
+               x => x.Participa(usuario.Email) && x.Categoria.Nome == name)
+               );
+            }
             listBoxEventosParticipo.ItemsSource = eventosParticipo.OrderBy(x => x.Data);
-          
+
         }
         void PreencheListMeusEventos()
         {
             Usuario usuario = conteinerUsuario.curUsuario;
-            eventosMeus = new ObservableCollection<Evento>(conteinerEventos.GetEventos(
+
+            string name = cbCategoriasFiltroAdm.SelectedItem.ToString();
+            if (name == "Todas Categorias")
+            {
+                eventosMeus = new ObservableCollection<Evento>(conteinerEventos.GetEventos(
                 x => x.Criador.Email == usuario.Email));
+            }
+            else
+            {
+                eventosMeus = new ObservableCollection<Evento>(conteinerEventos.GetEventos(
+                x => (x.Criador.Email == usuario.Email) && (x.Categoria.Nome == name)));
+            }
             listBoxEventosMeus.ItemsSource = eventosMeus;
         }
 
         private void PrencheCategoriasDrop()
         {
+            cbCategoriasFiltroAdm.Items.Add("Todas Categorias");
+            cbCategoriasFiltroAll.Items.Add("Todas Categorias");
+            cbCategoriasFiltroParti.Items.Add("Todas Categorias");
+
             foreach (var item in categoriaConteiner.colecao)
             {
                 cbCategoriasFiltroAdm.Items.Add(item.Nome);
@@ -170,13 +202,36 @@ namespace ProjetoAplicacaoEventos
 
         private void btParticiapr_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(sender.ToString());
             Button bt = (Button)sender;
             Grid grid = (Grid)bt.Parent;
             Evento ev = (Evento)grid.DataContext;
 
             ev.AdicionaParticipante(new Participante(usuario.Nome, usuario.Email));
-            string tes = conteinerEventos.colecao[0].Nome;
+        }
+
+        private void cbCategoriasFiltroAll_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PreencheListAllEventos();
+        }
+
+        private void cbCategoriasFiltroParti_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PreencheListAParticipoEventos();
+        }
+
+        private void cbCategoriasFiltroAdm_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PreencheListMeusEventos();
+        }
+
+        private void btDetalhes_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Button bt = (Button)sender;
+            Grid grid = (Grid)bt.Parent;
+            Evento evento = (Evento)grid.DataContext;
+
+            DetalhesEvento dt = new DetalhesEvento(evento);
+            dt.ShowDialog();
         }
     }
 }

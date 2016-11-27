@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ProjetoAplicacaoEventos.Conteiner;
 using ProjetoAplicacaoEventos.Utilitarios;
+using System.Timers;
 
 namespace ProjetoAplicacaoEventos
 {
@@ -28,6 +29,9 @@ namespace ProjetoAplicacaoEventos
         CategoriaConteiner categoriaConteiner;
         UsuarioConteiner conteinerUsuario;  
         EventosConteiner conteinerEventos;
+
+        Timer myTimer;
+
         // propriedade que armazena instância
         public static CadastroEvento Instancia
         {
@@ -71,6 +75,11 @@ namespace ProjetoAplicacaoEventos
             }
             cbHora.SelectedItem = cbHora.Items[24];
             //Determina uma hora pré selecionada
+
+
+            dtbData.DisplayDateStart = Utilitarios.Utilitarios.GetNistTime();
+            myTimer = new Timer();
+           
         }
 
 
@@ -79,10 +88,10 @@ namespace ProjetoAplicacaoEventos
         private void Window_Closed(object sender, EventArgs e)
         {
             instancia = null;
-            if (Owner != null)
-            {
-                Owner.Show();
-            }
+            //if (Owner != null)
+            //{
+            //    Owner.Show();
+            //}
         }
 
         // Destrutor da classe
@@ -120,8 +129,10 @@ namespace ProjetoAplicacaoEventos
                 x => x.Nome == cbCategoria.SelectedItem.ToString(),
                 new Categoria() { Nome = "Indefinida" });
 
-            evento.Criador = conteinerUsuario.curUsuario;
-            evento.AdicionaParticipante(new Participante(evento.Criador.Nome, evento.Criador.Email));
+            Participante p = new Participante(conteinerUsuario.curUsuario.Nome, conteinerUsuario.curUsuario.Email);
+
+            evento.Criador = p;
+            evento.AdicionaParticipante(p);
             DateTime dia;
 
             if (dtbData.SelectedDate == null)
@@ -135,7 +146,16 @@ namespace ProjetoAplicacaoEventos
                 string[] s = new string[2];
                 s = cbHora.SelectedItem.ToString().Split(':');
                 TimeSpan hora = new TimeSpan(Convert.ToInt32(s[0]), Convert.ToInt32(s[1]), 0);
-                evento.Data = dia.Add(hora);                
+                dia = dia.Subtract(new TimeSpan(dia.Hour, dia.Minute, dia.Second));
+                dia = dia.Add(hora);
+
+                if( DateTime.Compare(dia,DateTime.Now) <= 0)//Valida se a data eh pro futuro
+                {
+                    lbErroData.Content = "Essa data já passou!";
+                    return;
+                }
+
+                evento.Data = dia;                
             }
 
             // Caso todas as validações estejam corretas adiciona o evento ao conteiner

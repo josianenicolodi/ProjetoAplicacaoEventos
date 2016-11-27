@@ -1,0 +1,66 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProjetoAplicacaoEventos"
+        xmlns:Conteiner="clr-namespace:ProjetoAplicacaoEventos.Conteiner" x:Class="ProjetoAplicacaoEventos.DetalhesEvento"
+        mc:Ignorable="d"
+        Title="Detalhes Evento" Height="560" Width="480" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+
+    <Grid>
+        <Grid.DataContext>
+            <Conteiner:Evento/>
+        </Grid.DataContext>
+
+        <Label x:Name="lbName"
+			HorizontalContentAlignment="Center"
+			HorizontalAlignment="Center"
+			Margin="20,10,19,0"
+			VerticalAlignment="Top" Width="257" FontSize="16" FontWeight="Bold"/>
+        <TextBlock x:Name="lbDescricao"
+			HorizontalAlignment="Left" Margin="10,101,0,0" 
+			TextWrapping="Wrap" 
+			VerticalAlignment="Top" Width="259" Height="140"/>
+        <Label x:Name="label" Content="Participantes" 
+			HorizontalAlignment="Left" Margin="288,46,0,0"
+			VerticalAlignment="Top" Width="176"/>
+        <Label x:Name="label1" Content="Descricao do evento"
+			HorizontalAlignment="Left" Margin="10,70,0,0"
+			VerticalAlignment="Top" RenderTransformOrigin="0.324,0.08" Width="185"/>
+
+        <ListBox x:Name="listBox"
+			HorizontalAlignment="Left"
+			Height="444" Margin="288,77,0,0"
+			VerticalAlignment="Top" Width="176" >
+            <ListBox.DataContext>
+                <Conteiner:Participante/>
+            </ListBox.DataContext>
+        </ListBox>
+
+        <Label x:Name="label2" Content="Local"
+			HorizontalAlignment="Left" Margin="15,248,0,0"
+			VerticalAlignment="Top" Width="185"/>
+        <Label x:Name="lbLocal" 
+			HorizontalAlignment="Left" Margin="15,279,0,0"
+			VerticalAlignment="Top" Width="273"/>
+        <Label x:Name="label3" Content="Data" 
+			HorizontalAlignment="Left" Margin="15,310,0,0" VerticalAlignment="Top" Width="259"/>
+        <Label x:Name="lbData" Content="Label" 
+			HorizontalAlignment="Left" Margin="15,341,0,0" 
+			VerticalAlignment="Top" Width="273"/>
+        <Label x:Name="label4" Content="Criado por:" 
+			HorizontalAlignment="Left" Margin="15,396,0,0" VerticalAlignment="Top" Width="259"/>
+        <Label x:Name="lbCriador"
+			HorizontalAlignment="Left" Margin="15,422,0,0" VerticalAlignment="Top" Width="273"/>
+        <Button x:Name="btParticipar" Content="Participar"
+			HorizontalAlignment="Left" Margin="154,456,0,0" VerticalAlignment="Top" Width="129" Height="65" Background="#FF195F26" Foreground="White" Click="btParticipar_Click"/>
+        <Button x:Name="btSair" Content="Cancelar participação" 
+			HorizontalAlignment="Left" Margin="10,456,0,0" VerticalAlignment="Top" 
+			Width="129" Height="65" Foreground="White" Background="#FFCF4040" Click="btSair_Click"/>
+        <Label x:Name="lbCategoria" 
+			HorizontalAlignment="Left" Margin="10,44,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.342,1.526" Width="273" FontSize="9"/>
+        <Label x:Name="lbHora" Content="Label" HorizontalAlignment="Left" Margin="21,367,0,0" VerticalAlignment="Top" Width="174"/>
+
+    </Grid>
+</Window>

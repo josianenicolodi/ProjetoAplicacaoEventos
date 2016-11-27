@@ -17,8 +17,8 @@ namespace ProjetoAplicacaoEventos.Conteiner
 
         private Categoria categoria;
         private DateTime data;
-        private Usuario criador;
-        public List<Participante> participantes;
+        private Participante criador;
+        private List<Participante> participantes;
 
 
         public Evento()
@@ -91,7 +91,7 @@ namespace ProjetoAplicacaoEventos.Conteiner
             }
         }
 
-        public Usuario Criador
+        public Participante Criador
         {
             get
             {
@@ -127,7 +127,16 @@ namespace ProjetoAplicacaoEventos.Conteiner
 
         public void AdicionaParticipante(Participante participante)
         {
-            participantes.Add(participante);
+            if(!participantes.Exists(x => x.Email == participante.Email))
+            {
+                 participantes.Add(participante);
+            }
+        }
+
+        public void RemoveParticipante(Participante participante)
+        {
+            
+            participantes.Remove( participantes.Find(x => x.Email ==  participante.Email) );
         }
 
         public override string ToString()

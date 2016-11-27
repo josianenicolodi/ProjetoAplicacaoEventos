@@ -48,5 +48,10 @@ namespace ProjetoAplicacaoEventos.Conteiner
                 nome = value;
             }
         }
+
+        public override string ToString()
+        {
+            return Nome;
+        }
     }
 }

@@ -41,6 +41,7 @@ namespace ProjetoAplicacaoEventos
         {
             InitializeComponent();
             conteinerUsuario = UsuarioConteiner.Load(UsuarioConteiner.path);
+            LbError.Content = Utilitarios.Utilitarios.GetNistTime().ToString();
         }
 
         private void txNome_TextChanged(object sender, TextChangedEventArgs e)

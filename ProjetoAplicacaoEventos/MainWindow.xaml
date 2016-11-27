@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Eventos" Height="656.992" Width="734.11" Closed="Window_Closed" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Window.Resources>
-        
+
         <DataTemplate x:Key="myEventoTemplate">
             <Grid HorizontalAlignment="Left" Height="Auto" Margin="10" VerticalAlignment="Top" Background="#FFF0EEF3" d:DesignWidth="631" Width="Auto" d:DesignHeight="80"  >
                 <Grid.RowDefinitions>
@@ -28,24 +28,26 @@
                         </LinearGradientBrush>
                     </Label.OpacityMask>
                 </Label>
+                <Label x:Name="lbCategoria" Content="{Binding Categoria.Nome}" HorizontalAlignment="Left" Margin="0,21,0,0" VerticalAlignment="Top" Width="125" Height="23" Grid.RowSpan="2" FontSize="11"/>
                 <Label x:Name="lbDataEv" Content="{Binding Data}" HorizontalAlignment="Left" 
                        Margin="10,10,0,0" VerticalAlignment="Top" Width="77" Height="22" 
                        FontSize="8" Grid.Row="1"/>
                 <Button x:Name="btParticiapr" Content="Participar" 
-                        Click="btParticiapr_Click"  HorizontalAlignment="Right"
+                        PreviewMouseDown="btParticiapr_Click"  HorizontalAlignment="Right"
                         Margin="28,5,15,4" VerticalAlignment="Top" Width="88"
                         FontSize="10" Height="27" Grid.Column="2" IsEnabled="True"/>
+
                 <Button x:Name="btDetalhes" Content="Detalhes" HorizontalAlignment="Right" 
-                        Margin="28,5,15,4" VerticalAlignment="Top" Width="88" IsEnabled="False" 
-                        Height="29" Grid.Column="2" Grid.Row="1"/>
+                        Margin="28,5,15,4" VerticalAlignment="Top" Width="88" IsEnabled="True" 
+                        Height="29" Grid.Column="2" Grid.Row="1" PreviewMouseDown="btDetalhes_PreviewMouseDown"/>
                 <TextBlock x:Name="tbDescri_" HorizontalAlignment="Center" Margin="10,5" TextWrapping="Wrap" 
                            Text="{Binding Descricao}" VerticalAlignment="Top" Height="70" 
                            Width="257" FontSize="10" Background="{x:Null}" Grid.Column="1" Grid.RowSpan="2"/>
             </Grid>
         </DataTemplate>
-    
+
     </Window.Resources>
-    
+
     <Grid>
         <Label x:Name="lbUsuarioNome" Content="USerLogado" HorizontalAlignment="Right" Margin="0,7,24,0" VerticalAlignment="Top" Width="142" RenderTransformOrigin="1,0.5"/>
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="595" VerticalAlignment="Top" Width="716" Margin="0,10">
@@ -56,22 +58,22 @@
                         <GradientStop Color="White" Offset="1"/>
                     </LinearGradientBrush>
                 </TabItem.Background>
-                <Grid Background="White" Margin="10,5" RenderTransformOrigin="0.501,0.524">
+                <Grid Background="White">
                     <Label x:Name="lbCategoria" Content="Categorias" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="66"/>
-                    <ComboBox x:Name="cbCategoriasFiltroAll" HorizontalAlignment="Left" Margin="88,10,0,0" VerticalAlignment="Top" Width="194" Height="22"/>
-                  
+                    <ComboBox x:Name="cbCategoriasFiltroAll" HorizontalAlignment="Left" Margin="81,14,0,0" VerticalAlignment="Top" Width="194" Height="22" SelectionChanged="cbCategoriasFiltroAll_SelectionChanged"/>
+
                     <ListView x:Name="listBoxEventosAll"  
                              ItemTemplate="{StaticResource myEventoTemplate}"
                              ButtonBase.Click="btParticiapr_Click"
                              HorizontalAlignment="Stretch" Height="516" Margin="10,45,10,5" 
                              VerticalAlignment="Top" Background="White">
-                       
+
                         <ListView.DataContext>
                             <Conteiner:Evento/>
                         </ListView.DataContext>
 
                     </ListView>
-                    
+
                     <Grid HorizontalAlignment="Left" Height="144" Margin="14,413,0,0" VerticalAlignment="Top" Width="693"/>
 
                 </Grid>
@@ -85,15 +87,17 @@
                     </LinearGradientBrush>
                 </TabItem.Background>
                 <Grid Background="White">
-                    <Label x:Name="label1" Content="Categorias" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="115"/>
-                    <ComboBox x:Name="cbCategoriasFiltroParti" HorizontalAlignment="Left" Margin="88,10,0,0" VerticalAlignment="Top" Width="194" Height="22"/>
-                    <ListBox x:Name="listBoxEventosParticipo" ItemTemplate="{StaticResource myEventoTemplate}" HorizontalAlignment="Stretch" Height="515" Margin="10,55,0,0" VerticalAlignment="Top" Width="690">
+                    <Label x:Name="label1" Content="Categorias" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="66"/>
+                    <ComboBox x:Name="cbCategoriasFiltroParti" HorizontalAlignment="Left" Margin="81,14,0,0" VerticalAlignment="Top" Width="194" Height="22"  SelectionChanged="cbCategoriasFiltroParti_SelectionChanged"/>
+                    <ListView x:Name="listBoxEventosParticipo" ItemTemplate="{StaticResource myEventoTemplate}"
+                             HorizontalAlignment="Stretch" Height="516" Margin="10,45,10,5" 
+                             VerticalAlignment="Top" Background="White">
 
-                        <ListBox.DataContext>
+                        <ListView.DataContext>
                             <Conteiner:Evento/>
-                        </ListBox.DataContext>
-                        
-                    </ListBox>
+                        </ListView.DataContext>
+
+                    </ListView>
                 </Grid>
             </TabItem>
 
@@ -115,17 +119,19 @@
                         </Button.Background>
                     </Button>
 
-                    <ComboBox x:Name="cbCategoriasFiltroAdm" HorizontalAlignment="Left" Margin="94,16,0,0" VerticalAlignment="Top" Width="194" Loaded="cbCategoriasFiltro_Loaded" Height="22"/>
+                    <ComboBox x:Name="cbCategoriasFiltroAdm" HorizontalAlignment="Left" Margin="81,14,0,0" VerticalAlignment="Top" Width="194" Height="22"  Loaded="cbCategoriasFiltro_Loaded"  SelectionChanged="cbCategoriasFiltroAdm_SelectionChanged"/>
 
-                    <Label x:Name="label" Content="Categorias:" HorizontalAlignment="Left" Margin="15,12,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.494,-0.151" Width="77" Height="26"/>
+                    <Label x:Name="label" Content="Categorias" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="26" Width="66"/>
 
-                    <ListBox x:Name="listBoxEventosMeus" ItemTemplate="{StaticResource myEventoTemplate}" HorizontalAlignment="Stretch" Height="515" Margin="10,55,0,0" VerticalAlignment="Top" Width="690">
+                    <ListView x:Name="listBoxEventosMeus" ItemTemplate="{StaticResource myEventoTemplate}" 
+                             HorizontalAlignment="Stretch" Height="516" Margin="10,45,10,5" 
+                             VerticalAlignment="Top" Background="White">
 
-                        <ListBox.DataContext>
+                        <ListView.DataContext>
                             <Conteiner:Evento/>
-                        </ListBox.DataContext>
-                       
-                    </ListBox>
+                        </ListView.DataContext>
+
+                    </ListView>
                 </Grid>
             </TabItem>
 
