@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ProjetoAplicacaoEventos"
         xmlns:Conteiner="clr-namespace:ProjetoAplicacaoEventos.Conteiner" x:Class="ProjetoAplicacaoEventos.MainWindow"
         mc:Ignorable="d"
-        Title="Eventos" Height="656.992" Width="734.11" Closed="Window_Closed" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        Title="Eventos" Height="651.992" Width="734.11" Closed="Window_Closed" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Window.Resources>
 
         <DataTemplate x:Key="myEventoTemplate">
@@ -75,6 +75,7 @@
                     </ListView>
 
                     <Grid HorizontalAlignment="Left" Height="144" Margin="14,413,0,0" VerticalAlignment="Top" Width="693"/>
+                    <CheckBox x:Name="ckEventosPassado" Content="Mostrar eventos passados" HorizontalAlignment="Left" Margin="302,18,0,0" VerticalAlignment="Top" Click="ckEventosPassado_Click"/>
 
                 </Grid>
             </TabItem>
@@ -98,6 +99,8 @@
                         </ListView.DataContext>
 
                     </ListView>
+                    <CheckBox x:Name="ckEventosPassado1" Content="Mostrar eventos passados" HorizontalAlignment="Left" Margin="302,18,0,0" VerticalAlignment="Top" Click="ckEventosPassado1_Click"/>
+
                 </Grid>
             </TabItem>
 
@@ -132,6 +135,8 @@
                         </ListView.DataContext>
 
                     </ListView>
+                    <CheckBox x:Name="ckEventosPassado3" Content="Mostrar eventos passados" HorizontalAlignment="Left" Margin="302,18,0,0" VerticalAlignment="Top" Click="ckEventosPassado3_Click"/>
+
                 </Grid>
             </TabItem>
 

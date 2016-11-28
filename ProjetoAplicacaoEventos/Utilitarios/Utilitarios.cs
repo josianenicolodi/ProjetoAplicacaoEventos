@@ -14,6 +14,8 @@ namespace ProjetoAplicacaoEventos.Utilitarios
     public static class Utilitarios
     {
 
+        private static DateTime ultimaColsulta;
+
         public static bool IsEmpty(this string str)
         {
             return (str == string.Empty);
@@ -26,6 +28,15 @@ namespace ProjetoAplicacaoEventos.Utilitarios
 
         public static DateTime GetNistTime()
         {
+            if(ultimaColsulta != DateTime.MinValue)
+            {
+                int value = ultimaColsulta.Subtract(DateTime.Now).Minutes;
+                if (value > -5)
+                {
+                    return ultimaColsulta;
+                }
+            }
+
             DateTime dateTime = DateTime.MinValue;
             try
             {
@@ -53,7 +64,7 @@ namespace ProjetoAplicacaoEventos.Utilitarios
             {
                 dateTime = DateTime.Now;
             }
-
+            ultimaColsulta = dateTime;
             return dateTime;
         }
     }

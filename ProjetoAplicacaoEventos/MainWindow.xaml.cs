@@ -15,6 +15,9 @@ using System.Windows.Shapes;
 using ProjetoAplicacaoEventos.Usuarios;
 using ProjetoAplicacaoEventos.Conteiner;
 using System.Collections.ObjectModel;
+using System.Timers;
+using System.Windows.Threading;
+using System.ComponentModel;
 
 namespace ProjetoAplicacaoEventos
 {
@@ -34,7 +37,7 @@ namespace ProjetoAplicacaoEventos
         ObservableCollection<Evento> eventosAll;
         ObservableCollection<Evento> eventosParticipo;
         ObservableCollection<Evento> eventosMeus;
-
+        DispatcherTimer dtClockTime;
 
 
         public static MainWindow GetInstancia()
@@ -76,6 +79,63 @@ namespace ProjetoAplicacaoEventos
                 Inicializar(usuario);
             }
 
+            InicializarTimer();
+
+        }
+
+        void InicializarTimer()
+        {
+            dtClockTime = new DispatcherTimer();
+
+            dtClockTime.Interval = new TimeSpan(0, 1, 0); //in Hour, Minutes, Second.
+            dtClockTime.Tick += AlertaEventos;
+
+            dtClockTime.Start();
+        }
+
+        void AlertaEventos(object sender, EventArgs e)
+        {
+            BackgroundWorker worker = new BackgroundWorker();
+
+            worker.DoWork += BuscaEventosAgora;
+
+            worker.RunWorkerCompleted += MostraEventosAgora;
+            worker.RunWorkerAsync();
+        }
+
+        void MostraEventosAgora(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (((List<Evento>)e.Result).Count > 0)
+            {
+                StringBuilder st = new StringBuilder();
+                for (int i = 0; i < ((List<Evento>)e.Result).Count; i++)
+                {
+                    Evento ev = ((List<Evento>)e.Result)[i];
+
+                    st.Append(ev.Nome);
+                    st.Append(" - ");
+                }
+                st.Append(" ===> Vâo começar agora.");
+                MessageBox.Show(st.ToString());
+            }
+        }
+
+        void BuscaEventosAgora(object sender, DoWorkEventArgs e)
+        {
+            List<Evento> participo = new List<Evento>(); 
+            DateTime agora = Utilitarios.Utilitarios.GetNistTime();
+            TimeSpan ts;
+
+            foreach (var item in conteinerEventos.GetEventos(x => x.Participa(usuario.Email)))
+            {
+                ts = item.Data.Subtract(agora);
+                if(ts.Days == 0 && ts.Hours == 00 && ts.Minutes < 10)
+                {
+                    participo.Add(item);
+                }
+            }
+           
+            e.Result = participo;
         }
 
         void Inicializar(Usuario usr)
@@ -86,59 +146,73 @@ namespace ProjetoAplicacaoEventos
             PreencheListAllEventos();
         }
 
-        void PreencheListAllEventos()
+        void PreencheGenerico(ComboBox cb, ObservableCollection<Evento> cole,CheckBox ckb
+            , ListView list,
+            Predicate<Evento> TodasCategotias, Predicate<Evento> PorCategoria)
         {
-            string name = cbCategoriasFiltroAll.SelectedItem.ToString();
+
+            DateTime agora = Utilitarios.Utilitarios.GetNistTime();
+            bool passado = false;
+
+            if (ckb.IsChecked != null)
+                passado = ckb.IsChecked.Value;
+            string name = cb.SelectedItem.ToString();
+            List<Evento> temp = conteinerEventos.colecao;
             if (name == "Todas Categorias")
             {
-                eventosAll = new ObservableCollection<Evento>(conteinerEventos.colecao);
+                temp = conteinerEventos.GetEventos(TodasCategotias);
+                if (!passado)
+                {
+                    cole = new ObservableCollection<Evento>(temp.FindAll(
+                            x => DateTime.Compare(x.Data, agora) > 0)
+                        );
+                }
+                else
+                {
+                    cole = new ObservableCollection<Evento>(temp);
+                }
             }
             else
             {
-                eventosAll = new ObservableCollection<Evento>(conteinerEventos.GetEventos(
-                    x => x.Categoria.Nome == name));
-
-                listBoxEventosAll.ItemsSource = eventosAll;
+                temp = conteinerEventos.GetEventos(PorCategoria);
+                if (passado)
+                {
+                    cole = new ObservableCollection<Evento>(temp);
+                }
+                else
+                {
+                    cole = new ObservableCollection<Evento>(temp.FindAll(
+                                 x => DateTime.Compare(x.Data, agora) > 0)
+                                 );
+                }
             }
-            listBoxEventosAll.ItemsSource = eventosAll;
+            list.ItemsSource = cole.OrderBy(x => x.Data);
+        }
+
+        void PreencheListAllEventos()
+        {
+            string name = cbCategoriasFiltroAll.SelectedItem.ToString();
+            PreencheGenerico(cbCategoriasFiltroAll, eventosAll,ckEventosPassado, listBoxEventosAll, x => x is Evento, x => x.Categoria.Nome == name);
+
         }
 
         void PreencheListAParticipoEventos()
         {
             string name = cbCategoriasFiltroParti.SelectedItem.ToString();
-            if (name == "Todas Categorias")
-            {
-                eventosParticipo = new ObservableCollection<Evento>(conteinerEventos.GetEventos
-                (
-                x => x.Participa(usuario.Email))
-                );
-            }
-            else
-            {
-                eventosParticipo = new ObservableCollection<Evento>(conteinerEventos.GetEventos
-               (
-               x => x.Participa(usuario.Email) && x.Categoria.Nome == name)
-               );
-            }
-            listBoxEventosParticipo.ItemsSource = eventosParticipo.OrderBy(x => x.Data);
+
+            PreencheGenerico(cbCategoriasFiltroParti, eventosParticipo,ckEventosPassado1,
+                listBoxEventosParticipo, x => x.Participa(usuario.Email), x => x.Participa(usuario.Email) && x.Categoria.Nome == name);
 
         }
         void PreencheListMeusEventos()
         {
-            Usuario usuario = conteinerUsuario.curUsuario;
+            //Usuario usuario = conteinerUsuario.curUsuario;
 
             string name = cbCategoriasFiltroAdm.SelectedItem.ToString();
-            if (name == "Todas Categorias")
-            {
-                eventosMeus = new ObservableCollection<Evento>(conteinerEventos.GetEventos(
-                x => x.Criador.Email == usuario.Email));
-            }
-            else
-            {
-                eventosMeus = new ObservableCollection<Evento>(conteinerEventos.GetEventos(
-                x => (x.Criador.Email == usuario.Email) && (x.Categoria.Nome == name)));
-            }
-            listBoxEventosMeus.ItemsSource = eventosMeus;
+
+            PreencheGenerico(cbCategoriasFiltroAdm, eventosMeus,ckEventosPassado3,
+                listBoxEventosMeus, x => x.Criador.Email == usuario.Email,
+                x => (x.Criador.Email == usuario.Email) && (x.Categoria.Nome == name));
         }
 
         private void PrencheCategoriasDrop()
@@ -232,6 +306,21 @@ namespace ProjetoAplicacaoEventos
 
             DetalhesEvento dt = new DetalhesEvento(evento);
             dt.ShowDialog();
+        }
+
+        private void ckEventosPassado_Click(object sender, RoutedEventArgs e)
+        {
+            PreencheListAllEventos();
+        }
+
+        private void ckEventosPassado1_Click(object sender, RoutedEventArgs e)
+        {
+            PreencheListAParticipoEventos();
+        }
+
+        private void ckEventosPassado3_Click(object sender, RoutedEventArgs e)
+        {
+            PreencheListMeusEventos();
         }
     }
 }

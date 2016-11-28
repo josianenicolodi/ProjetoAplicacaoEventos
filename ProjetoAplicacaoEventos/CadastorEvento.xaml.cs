@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ProjetoAplicacaoEventos.Conteiner;
 using ProjetoAplicacaoEventos.Utilitarios;
-using System.Timers;
+
 
 namespace ProjetoAplicacaoEventos
 {
@@ -30,7 +30,7 @@ namespace ProjetoAplicacaoEventos
         UsuarioConteiner conteinerUsuario;  
         EventosConteiner conteinerEventos;
 
-        Timer myTimer;
+       
 
         // propriedade que armazena instância
         public static CadastroEvento Instancia
@@ -78,7 +78,7 @@ namespace ProjetoAplicacaoEventos
 
 
             dtbData.DisplayDateStart = Utilitarios.Utilitarios.GetNistTime();
-            myTimer = new Timer();
+           
            
         }
 

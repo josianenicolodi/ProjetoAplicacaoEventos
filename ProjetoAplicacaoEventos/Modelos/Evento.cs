@@ -25,6 +25,7 @@ namespace ProjetoAplicacaoEventos.Conteiner
         {
             participantes = new List<Participante>();
         }
+
         #region Propriedades
         public string Nome
         {
@@ -135,7 +136,6 @@ namespace ProjetoAplicacaoEventos.Conteiner
 
         public void RemoveParticipante(Participante participante)
         {
-            
             participantes.Remove( participantes.Find(x => x.Email ==  participante.Email) );
         }
 
