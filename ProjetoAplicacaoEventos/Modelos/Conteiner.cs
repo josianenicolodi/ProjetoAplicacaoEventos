@@ -1,97 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace ProjetoAplicacaoEventos.Conteiner
 {
-    public abstract class ConteinerXml<T,C>
-    {
-        [XmlIgnore]
-        protected static T instancia;  
-          
-        [XmlArray("colecao")]
-        [XmlArrayItem("Item")]   
-        public List<C> colecao;
 
+    public interface Salvavel
+    {
         
+    }
+
+    public abstract class Conteiner<T, C>
+    {
+
+        protected static T instancia;
+
 
         #region DAdO
-        public C Get(Predicate<C> predicado, C defaut)
+        public virtual C Get(Predicate<C> predicado, C defaut)
         {
-            if (colecao.Exists(predicado))
-            {
-                return colecao.Find(predicado);
-            }
             return defaut;
         }
 
-        public List<C> GetEventos(Predicate<C> predicado)
+        public virtual List<C> GetTodos(Predicate<C> predicado)
         {
-            return colecao.FindAll(predicado);
+            return new List<C>();
         }
 
-        public void Add(C Novo, Predicate<C> predicado)
-        {
-            if (!colecao.Exists(predicado))
-            {
-                colecao.Add(Novo);
-            }
-        }
+        public virtual void Add(C Novo, Predicate<C> predicado) { }
 
-        public void Add(C novo)
-        {
-            colecao.Add(novo);
-        }
+        public virtual void Add(C novo) { }
 
-        public bool Existe(Predicate<C> condicao)
+        public virtual bool Existe(Predicate<C> condicao)
         {
-            return colecao.Exists(condicao);
+            return false;
         }
         #endregion
 
         #region Save/Load
-        public void Save(string path)
-        {
-            var serializable = new XmlSerializer(typeof(T));
+        public abstract void Save(string path);
 
-            try
-            {
-                using (var stream = new FileStream(path, FileMode.Create))
-                {
-                    serializable.Serialize(stream, this);
-                    stream.Close();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);//Aqui sera lançada uma exeção presonalizada que gravara em um txt
-            }
-        }
+       //nao pensei em como fazer o load  ser statico e virtul
+       //pensei em fazer uma interface e tal
 
-
-        public static T Load(string path)
-        {
-            if (instancia == null)
-            {
-                if (File.Exists(path))
-                {
-                    var serializer = new XmlSerializer(typeof(T));
-                    using (var stream = new FileStream(path, FileMode.Open))
-                    {
-                        instancia = (T)serializer.Deserialize(stream);                       
-                    }
-                }
-                else
-                {
-                   instancia = (T)Activator.CreateInstance(typeof(T));
-                }
-            }
-            return instancia;
-        }
         #endregion
     }
 }

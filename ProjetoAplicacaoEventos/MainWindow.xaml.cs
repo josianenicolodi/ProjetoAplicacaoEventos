@@ -126,7 +126,7 @@ namespace ProjetoAplicacaoEventos
             DateTime agora = Utilitarios.Utilitarios.GetNistTime();
             TimeSpan ts;
 
-            foreach (var item in conteinerEventos.GetEventos(x => x.Participa(usuario.Email)))
+            foreach (var item in conteinerEventos.GetTodos(x => x.Participa(usuario.Email)))
             {
                 ts = item.Data.Subtract(agora);
                 if(ts.Days == 0 && ts.Hours == 00 && ts.Minutes < 10)
@@ -160,7 +160,7 @@ namespace ProjetoAplicacaoEventos
             List<Evento> temp = conteinerEventos.colecao;
             if (name == "Todas Categorias")
             {
-                temp = conteinerEventos.GetEventos(TodasCategotias);
+                temp = conteinerEventos.GetTodos(TodasCategotias);
                 if (!passado)
                 {
                     cole = new ObservableCollection<Evento>(temp.FindAll(
@@ -174,7 +174,7 @@ namespace ProjetoAplicacaoEventos
             }
             else
             {
-                temp = conteinerEventos.GetEventos(PorCategoria);
+                temp = conteinerEventos.GetTodos(PorCategoria);
                 if (passado)
                 {
                     cole = new ObservableCollection<Evento>(temp);

@@ -104,6 +104,8 @@
     <Compile Include="Modelos\Categoria.cs" />
     <Compile Include="Modelos\CategoriaConteiner.cs" />
     <Compile Include="Modelos\Conteiner.cs" />
+    <Compile Include="Modelos\ConteinerBinary.cs" />
+    <Compile Include="Modelos\ConteinerXML.cs" />
     <Compile Include="Modelos\Evento.cs" />
     <Compile Include="Modelos\EventosConteiner.cs" />
     <Compile Include="ListaTodosUsuariosTemparario.xaml.cs">
