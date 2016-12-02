@@ -102,7 +102,7 @@ namespace ProjetoAplicacaoEventos
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            ListaTodosUsuariosTemparario j = ListaTodosUsuariosTemparario.Instancia;
+            CadastraCategoria j = CadastraCategoria.Instancia;
  
             j.Owner = this;
             Hide();

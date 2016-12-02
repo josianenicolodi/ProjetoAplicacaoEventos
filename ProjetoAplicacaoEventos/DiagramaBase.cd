@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="ProjetoAplicacaoEventos.Conteiner.Categoria">
+    <Position X="0.5" Y="12.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAEAA=</HashCode>
+      <FileName>Modelos\Categoria.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjetoAplicacaoEventos.Conteiner.CategoriaConteiner">
+    <Position X="10.75" Y="7.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Modelos\CategoriaConteiner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjetoAplicacaoEventos.Conteiner.Conteiner&lt;T, C&gt;">
+    <Position X="6" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAIAAIAAAAgAAABAAAAAAAAAAAAAAAAAAAAAAAEEAAA=</HashCode>
+      <FileName>Modelos\Conteiner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjetoAplicacaoEventos.Conteiner.ConteinerBinary&lt;T, C&gt;">
+    <Position X="4" Y="3.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAIAgIAAAAgAAABAAAAAAAAAAAIAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Modelos\ConteinerBinary.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjetoAplicacaoEventos.Conteiner.ConteinerXml&lt;T, C&gt;">
+    <Position X="7.5" Y="3.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAIAgIAAAAgAAABAAAAAAAAAAAIAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Modelos\ConteinerXML.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjetoAplicacaoEventos.Conteiner.Evento">
+    <Position X="5.5" Y="9.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AQAQAAAAACABAAAkAQAAIAAAAAAAABAABIAQAAUAEAI=</HashCode>
+      <FileName>Modelos\Evento.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="categoria" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="participantes" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="ProjetoAplicacaoEventos.Conteiner.EventosConteiner">
+    <Position X="7.5" Y="7.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modelos\EventosConteiner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjetoAplicacaoEventos.Conteiner.Participante">
+    <Position X="0.5" Y="9.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAACAAAAAkAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Modelos\Participante.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjetoAplicacaoEventos.Usuarios.Usuario">
+    <Position X="0.5" Y="3.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAACAAAAAkAAAAIgAAACIAAAACAAAQAAEAEAA=</HashCode>
+      <FileName>Modelos\Usuario.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjetoAplicacaoEventos.Usuarios.UsuarioConteiner">
+    <Position X="3.75" Y="7" Width="2.5" />
+    <InheritanceLine Type="ProjetoAplicacaoEventos.Conteiner.ConteinerBinary&lt;T, C&gt;" ManuallyRouted="true" FixedFromPoint="true">
+      <Path>
+        <Point X="5" Y="6.396" />
+        <Point X="5" Y="7" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modelos\UsuarioConteiner.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="curUsuario" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ProjetoAplicacaoEventos.Utilitarios.Utilitarios">
+    <Position X="8.5" Y="9.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAFAAAAAAAAAAAgAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Utilitarios\Utilitarios.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProjetoAplicacaoEventos.Utilitarios.Criptografia">
+    <Position X="8.5" Y="12.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Utilitarios\Utilitarios.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

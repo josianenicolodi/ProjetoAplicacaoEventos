@@ -12,18 +12,27 @@ namespace ProjetoAplicacaoEventos.Conteiner
     [System.Serializable]
     public class CategoriaConteiner : ConteinerXml<CategoriaConteiner,Categoria>
     {
-        [XmlIgnore]
-        public static string path = "Categorias.xml";
+        
+        public static string path = "Categorias.data";
 
         public CategoriaConteiner()
         {
-            colecao = new List<Categoria>();
-            colecao.AddRange(new List<Categoria>{
+            colecao = new List<Categoria>();                    
+        }
+
+        public void Populacolecao()
+        {
+            if(colecao.Count <= 0)
+            {
+                colecao.AddRange(new List<Categoria>{
                 new Categoria() { Nome = "Tecnologia", Descricao = "Eventos sobre tecnologias"},
                 new Categoria() { Nome = "Medicina", Descricao = "Eventos sobre Medicina"},
                 new Categoria() { Nome = "Doação de Animais", Descricao = "Eventos para adoção e conseguir verbas para ajudar animais"},
               });
+            }
         }
+
+        
 
     }
 }

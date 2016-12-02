@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ProjetoAplicacaoEventos.Utilitarios;
+using ProjetoAplicacaoEventos.Conteiner;
 
 namespace ProjetoAplicacaoEventos
 {
@@ -53,6 +54,7 @@ namespace ProjetoAplicacaoEventos
             lbErroDescri.Content = string.Empty;
             txNome.Text = string.Empty;
             txDescricao.Text = string.Empty;
+            Owner.Show();
 
 
         }
@@ -62,7 +64,19 @@ namespace ProjetoAplicacaoEventos
 
             if(ValidaCampo(txNome, lbErroNome) && ValidaCampo(txDescricao, lbErroDescri))
             {
-                //Categotia
+                CategoriaConteiner categoriaConteiner = CategoriaConteiner.Load(CategoriaConteiner.path);
+                categoriaConteiner.Populacolecao();
+                if(!categoriaConteiner.Existe(x => x.Nome == txNome.Text))
+                {
+                    categoriaConteiner.Add(new Categoria()
+                    {
+                        Nome = txNome.Text,
+                        Descricao = txDescricao.Text
+                    });
+                }
+                categoriaConteiner.Save(CategoriaConteiner.path);
+                Owner.Show();
+                Hide();
             }
            
         }

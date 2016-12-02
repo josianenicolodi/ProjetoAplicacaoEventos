@@ -55,6 +55,8 @@ namespace ProjetoAplicacaoEventos
             InitializeComponent();
 
             categoriaConteiner = CategoriaConteiner.Load(CategoriaConteiner.path);
+            categoriaConteiner.Populacolecao();
+            categoriaConteiner.Save(CategoriaConteiner.path);
             conteinerUsuario = UsuarioConteiner.Load(UsuarioConteiner.path);
             usuario = conteinerUsuario.curUsuario;
 
@@ -64,15 +66,9 @@ namespace ProjetoAplicacaoEventos
             if (usuario == null)
             {
                 instancia = null;
-                if (Owner != null)
-                {
-                    Owner.Show();
-                    Hide();
-                }
-                else
-                {
-                    Application.Current.Shutdown();
-                }
+
+                Application.Current.Shutdown();
+
             }
             else
             {
@@ -122,19 +118,19 @@ namespace ProjetoAplicacaoEventos
 
         void BuscaEventosAgora(object sender, DoWorkEventArgs e)
         {
-            List<Evento> participo = new List<Evento>(); 
+            List<Evento> participo = new List<Evento>();
             DateTime agora = Utilitarios.Utilitarios.GetNistTime();
             TimeSpan ts;
 
             foreach (var item in conteinerEventos.GetTodos(x => x.Participa(usuario.Email)))
             {
                 ts = item.Data.Subtract(agora);
-                if(ts.Days == 0 && ts.Hours == 00 && ts.Minutes < 10)
+                if (ts.Days == 0 && ts.Hours == 00 && ts.Minutes < 10)
                 {
                     participo.Add(item);
                 }
             }
-           
+
             e.Result = participo;
         }
 
@@ -146,7 +142,7 @@ namespace ProjetoAplicacaoEventos
             PreencheListAllEventos();
         }
 
-        void PreencheGenerico(ComboBox cb, ObservableCollection<Evento> cole,CheckBox ckb
+        void PreencheGenerico(ComboBox cb, ObservableCollection<Evento> cole, CheckBox ckb
             , ListView list,
             Predicate<Evento> TodasCategotias, Predicate<Evento> PorCategoria)
         {
@@ -192,7 +188,7 @@ namespace ProjetoAplicacaoEventos
         void PreencheListAllEventos()
         {
             string name = cbCategoriasFiltroAll.SelectedItem.ToString();
-            PreencheGenerico(cbCategoriasFiltroAll, eventosAll,ckEventosPassado, listBoxEventosAll, x => x is Evento, x => x.Categoria.Nome == name);
+            PreencheGenerico(cbCategoriasFiltroAll, eventosAll, ckEventosPassado, listBoxEventosAll, x => x is Evento, x => x.Categoria.Nome == name);
 
         }
 
@@ -200,7 +196,7 @@ namespace ProjetoAplicacaoEventos
         {
             string name = cbCategoriasFiltroParti.SelectedItem.ToString();
 
-            PreencheGenerico(cbCategoriasFiltroParti, eventosParticipo,ckEventosPassado1,
+            PreencheGenerico(cbCategoriasFiltroParti, eventosParticipo, ckEventosPassado1,
                 listBoxEventosParticipo, x => x.Participa(usuario.Email), x => x.Participa(usuario.Email) && x.Categoria.Nome == name);
 
         }
@@ -210,7 +206,7 @@ namespace ProjetoAplicacaoEventos
 
             string name = cbCategoriasFiltroAdm.SelectedItem.ToString();
 
-            PreencheGenerico(cbCategoriasFiltroAdm, eventosMeus,ckEventosPassado3,
+            PreencheGenerico(cbCategoriasFiltroAdm, eventosMeus, ckEventosPassado3,
                 listBoxEventosMeus, x => x.Criador.Email == usuario.Email,
                 x => (x.Criador.Email == usuario.Email) && (x.Categoria.Nome == name));
         }

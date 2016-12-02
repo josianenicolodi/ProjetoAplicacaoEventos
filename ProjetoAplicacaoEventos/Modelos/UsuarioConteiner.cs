@@ -12,7 +12,7 @@ namespace ProjetoAplicacaoEventos.Usuarios
 
     [System.Serializable]
     // Armazena dados de usuários
-    public class UsuarioConteiner : ConteinerXml<UsuarioConteiner,Usuario>
+    public class UsuarioConteiner : ConteinerBinary<UsuarioConteiner,Usuario>
     {
         public static string path = @"Usuarios.xml";
         public Usuario curUsuario;
@@ -21,7 +21,6 @@ namespace ProjetoAplicacaoEventos.Usuarios
         public UsuarioConteiner()
         {
             colecao = new List<Usuario>();
-            
         }
     }
 }

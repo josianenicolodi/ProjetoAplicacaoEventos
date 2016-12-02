@@ -53,23 +53,32 @@ namespace ProjetoAplicacaoEventos.Conteiner
         public override void Save(string path)
         {
             var serializable = new XmlSerializer(typeof(T));
+            string temp = @"temp123" + path;
+            Utilitarios.Criptografia cr;
+
+            if (File.Exists(path))
+            {
+                cr = new Utilitarios.Criptografia();
+                cr.DecryptFile(path, temp);
+            }
 
             try
             {
-                if (File.Exists(path))
-                    File.Decrypt(path);
-                using (var stream = new FileStream(path, FileMode.Create))
+                using (var stream = new FileStream(temp, FileMode.Create))
                 {
-
                     serializable.Serialize(stream, this);
                     stream.Close();
                 }
-                    File.Encrypt(path);
+
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
+
+            cr = new Utilitarios.Criptografia();
+            cr.EncryptFile(temp, path);
+            File.Delete(temp);
         }
 
 
@@ -79,13 +88,19 @@ namespace ProjetoAplicacaoEventos.Conteiner
             {
                 if (File.Exists(path))
                 {
-                    File.Decrypt(path);
+                    string temp = @"temp123" + path;
+                    Utilitarios.Criptografia cr;
+
+                    cr = new Utilitarios.Criptografia();
+                    cr.DecryptFile(path, temp);
+
+
                     var serializer = new XmlSerializer(typeof(T));
-                    using (var stream = new FileStream(path, FileMode.Open))
+                    using (var stream = new FileStream(temp, FileMode.Open))
                     {
                         instancia = (T)serializer.Deserialize(stream);
                     }
-                        File.Encrypt(path);
+                    File.Delete(temp);
                 }
                 else
                 {

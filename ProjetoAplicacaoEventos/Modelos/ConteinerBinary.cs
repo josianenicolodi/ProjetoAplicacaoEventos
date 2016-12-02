@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProjetoAplicacaoEventos.Conteiner
 {
+    [System.Serializable]
     public class ConteinerBinary<T, C> : Conteiner<T, C>
     {
         public List<C> colecao;
@@ -51,12 +52,23 @@ namespace ProjetoAplicacaoEventos.Conteiner
         public override void Save(string path)
         {
             FileStream fs;
-            using (fs = new FileStream("DataFile.dat", FileMode.Create))
+
+            string temp = @"temp123" + path;
+            Utilitarios.Criptografia cr;
+
+            if (File.Exists(path))
+            {
+                cr = new Utilitarios.Criptografia();
+                cr.DecryptFile(path, temp);
+            }
+
+
+            using (fs = new FileStream(temp, FileMode.Create))
             {
                 BinaryFormatter formatter = new BinaryFormatter();
                 try
                 {
-                    formatter.Serialize(fs, colecao);
+                    formatter.Serialize(fs, this);
                 }
                 catch (SerializationException e)
                 {
@@ -68,7 +80,53 @@ namespace ProjetoAplicacaoEventos.Conteiner
                     fs.Close();
                 }
             }
-           
+            cr = new Utilitarios.Criptografia();
+            cr.EncryptFile(temp, path);
+            File.Delete(temp);
+
+        }
+
+        public static T Load(string path)
+        {
+            if (instancia == null)
+            {
+                if (File.Exists(path))
+                {
+                    FileStream fs;
+
+                    string temp = @"temp123" + path;
+                    Utilitarios.Criptografia cr;
+
+                    cr = new Utilitarios.Criptografia();
+                    cr.DecryptFile(path, temp);
+
+
+
+                    using (fs = new FileStream(temp, FileMode.Open))
+                    {
+                        BinaryFormatter formatter = new BinaryFormatter();
+                        try
+                        {
+                            instancia = (T)formatter.Deserialize(fs);
+                        }
+                        catch (SerializationException e)
+                        {
+                            Console.WriteLine("Failed to serialize. Reason: " + e.Message);
+                            instancia = (T)Activator.CreateInstance(typeof(T));
+                        }
+                        finally
+                        {
+                            fs.Close();
+                        }
+                    }
+                    File.Delete(temp);
+                }
+                else
+                {
+                    instancia = (T)Activator.CreateInstance(typeof(T));
+                }
+            }
+            return instancia;
         }
     }
 }

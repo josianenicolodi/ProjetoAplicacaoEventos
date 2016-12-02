@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjetoAplicacaoEventos.Conteiner
 {
-
-    public interface Salvavel
-    {
-        
-    }
-
+    [System.Serializable]
     public abstract class Conteiner<T, C>
     {
 
